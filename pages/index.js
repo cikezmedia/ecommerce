@@ -9,7 +9,7 @@ export default function Home() {
       <Head>
         <title>Welcome to KezMart Online Store</title>
         <meta name='description' content='KezMart Special Store' />
-        <link rel='icon' href='/favicon.ico' />
+        <link rel='icon' href='/favicon.png' />
       </Head>
       <Hero />
       <Banner />
