@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   MdLightMode,
   MdKeyboardArrowDown,
@@ -19,18 +19,20 @@ const Header = () => {
         {/* Desktop Menu */}
         <div className='hidden lg:block'>
           <div className='container flex flex-row justify-between items-center mx-auto'>
-            <div className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-pink to-black w-1/3'>
-              KezMart
-            </div>
+            <Link href='../'>
+              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-pink to-black w-1/3'>
+                KezMart
+              </a>
+            </Link>
 
             <div className=' flex flex-row mx-auto place-content-center space-x-12 w-1/3'>
-              <Link href='./'>
+              <Link href='../'>
                 <a>Home</a>
               </Link>
-              <Link href='shop'>
+              <Link href='../shop'>
                 <a>Shop</a>
               </Link>
-              <Link href='wishlist'>
+              <Link href='../wishlist'>
                 <a>Wishlist</a>
               </Link>
             </div>
@@ -77,9 +79,11 @@ const Header = () => {
         {/* Mobile Menu */}
         <div className='flex lg:hidden'>
           <div className='container flex flex-row justify-between items-center mx-auto'>
-            <div className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink'>
-              KezMart
-            </div>
+            <Link href='../'>
+              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink'>
+                KezMart
+              </a>
+            </Link>
             <div className='flex flex-row items-center space-x-5'>
               <RiSearch2Line className='w-6 h-6 text-black dark:text-white' />
               <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
@@ -94,7 +98,7 @@ const Header = () => {
                 <div className='absolute top-[85px] z-10 bg-black dark:bg-pink w-full text-white dark:text-black p-6 right-0'>
                   <div className='flex flex-col gap-5 text-lg font-roboto text-purple dark:text-black tracking-wider'>
                     <div className='flex flex-col gap-5'>
-                      <Link href='./'>
+                      <Link href='../'>
                         <a>Home</a>
                       </Link>
                       <Link href='shop'>
