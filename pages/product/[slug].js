@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { AiFillStar } from 'react-icons/ai';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import Link from 'next/link';
+import { Banner } from '../../components';
 
 const ProductPage = () => {
   const [count, setCount] = useState(1);
@@ -145,6 +146,7 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
+      <Banner />
     </>
   );
 };
