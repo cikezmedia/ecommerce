@@ -4,7 +4,10 @@ import { useRouter } from 'next/router';
 import data from '../../utils/data';
 import Image from 'next/image';
 import { AiFillStar } from 'react-icons/ai';
-import { MdOutlineKeyboardBackspace } from 'react-icons/md';
+import {
+  MdOutlineKeyboardBackspace,
+  MdKeyboardArrowRight,
+} from 'react-icons/md';
 import Link from 'next/link';
 import { Banner } from '../../components';
 
@@ -41,7 +44,7 @@ const ProductPage = () => {
         <link rel='icon' href='/favicon.png' />
       </Head>
       <div className='flex flex-row items-center justify-between sticky z-10 top-0 bg-gradient-to-r from-mainPurple to-gray-100 pl-6 pr-6 p-2'>
-        <Link href='../'>
+        <Link href='/shop'>
           <a>
             <MdOutlineKeyboardBackspace className='w-7 h-7 text-black' />
           </a>
@@ -142,6 +145,19 @@ const ProductPage = () => {
                   </button>
                 </a>
               </Link>
+            </div>
+            <div className='flex flex-col pt-4'>
+              <div className='flex flex-row items-center justify-between border-b border-gray-300 pb-3'>
+                <div className='flex flex-col text-[11px]'>
+                  <span>Dispatch in 1 - 2 days</span>
+                  <span className='underline'>Don't like delay?</span>
+                </div>
+                <MdKeyboardArrowRight className='w-4 h-4' />
+              </div>
+              <div className='flex flex-row items-center justify-between border-b border-gray-300 pb-4 pt-4'>
+                <span className='text-[11px]'>Home delivery - $10</span>
+                <MdKeyboardArrowRight className='w-4 h-4' />
+              </div>
             </div>
           </div>
         </div>

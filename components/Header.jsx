@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
-import {
-  MdLightMode,
-  MdKeyboardArrowDown,
-  MdKeyboardArrowUp,
-} from 'react-icons/md';
+import { MdLightMode } from 'react-icons/md';
 import { RiSearch2Line, RiUser6Line, RiShoppingCartLine } from 'react-icons/ri';
+import { IoIosHeartEmpty } from 'react-icons/io';
 import { CgMenuRight } from 'react-icons/cg';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
   function toggleMenu() {
     setIsOpen((prev) => !prev);
@@ -47,28 +45,29 @@ const Header = () => {
                 <RiSearch2Line className='absolute w-5 h-5 cursor-pointer top-1.5 right-2 text-black dark:text-pink' />
               </form>
               <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
-              <MdLightMode className='w-6 h-6 text-black dark:text-white' />
+              <IoIosHeartEmpty className='w-6 h-6 text-black dark:text-white' />
               <div
                 onClick={toggleMenu}
                 className='flex flex-row items-center cursor-pointer'
               >
                 <RiUser6Line className='w-6 h-6 text-black dark:text-white' />
-                {!isOpen ? (
-                  <MdKeyboardArrowDown className='w-5 h-5 text-black dark:text-white' />
-                ) : (
-                  <MdKeyboardArrowUp className='w-5 h-5 text-black dark:text-white' />
-                )}
               </div>
 
               {isOpen && (
-                <div className='absolute top-[85px] z-10 bg-black dark:bg-pink w-40 text-white dark:text-black right-2 p-4 rounded-b-lg'>
+                <div
+                  className='absolute top-[85px] z-20 bg-black dark:bg-pink w-40 text-white dark:text-black right-0 p-4 rounded-b-lg'
+                  onClick={toggle}
+                >
                   <div className='flex flex-col gap-5 text-lg font-roboto text-purple dark:text-black tracking-wider'>
-                    <Link href='./' className='pb-4 border-b-2 border-black'>
+                    <Link href='../' className='pb-4 border-b-2 border-black'>
                       <a>Login</a>
                     </Link>
-                    <Link href='./'>
+                    <Link href='../'>
                       <a>Signup</a>
                     </Link>
+                    <div className='flex flex-row text-sm gap-2 items-center'>
+                      <MdLightMode className='w-5 h-5' /> Dark theme
+                    </div>
                   </div>
                 </div>
               )}
@@ -78,44 +77,48 @@ const Header = () => {
 
         {/* Mobile Menu */}
         <div className='flex lg:hidden'>
-          <div className='container flex flex-row justify-between items-center mx-auto'>
+          <div
+            className='container flex flex-row justify-between items-center mx-auto'
+            onClick={toggle}
+          >
             <Link href='../'>
               <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink'>
                 KezMart
               </a>
             </Link>
-            <div className='flex flex-row items-center space-x-5'>
+            <div className='flex flex-row items-center space-x-4'>
               <RiSearch2Line className='w-6 h-6 text-black dark:text-white' />
               <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
+              <IoIosHeartEmpty className='w-6 h-6 text-black dark:text-white' />
               <div
                 onClick={toggleMenu}
-                className='flex flex-row items-center pl-2 cursor-pointer'
+                className='flex flex-row items-center cursor-pointer'
               >
                 <CgMenuRight className='w-8 h-8 text-black dark:text-white' />
               </div>
 
               {isOpen && (
-                <div className='absolute top-[85px] z-10 bg-black dark:bg-pink w-full text-white dark:text-black p-6 right-0'>
+                <div className='absolute top-[85px] z-20 bg-black dark:bg-pink w-full text-white dark:text-black p-6 right-0'>
                   <div className='flex flex-col gap-5 text-lg font-roboto text-purple dark:text-black tracking-wider'>
                     <div className='flex flex-col gap-5'>
                       <Link href='../'>
                         <a>Home</a>
                       </Link>
-                      <Link href='shop'>
+                      <Link href='../shop'>
                         <a>Shop</a>
                       </Link>
-                      <Link href='wishlist'>
+                      <Link href='../wishlist'>
                         <a>Wishlist</a>
                       </Link>
                     </div>
-                    <Link href='./'>
+                    <Link href='../'>
                       <a>Login</a>
                     </Link>
-                    <Link href='./'>
+                    <Link href='../'>
                       <a>Signup</a>
                     </Link>
-                    <div className='flex flex-row items-center cursor-pointer space-x-2'>
-                      <MdLightMode className='w-6 h-6' />
+                    <div className='flex flex-row items-center cursor-pointer space-x-2 text-sm'>
+                      <MdLightMode className='w-5 h-5' />
                       <span>Light theme</span>
                     </div>
                   </div>

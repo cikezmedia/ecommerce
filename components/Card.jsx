@@ -22,7 +22,7 @@ const Card = (product) => {
         <div className='flex flex-row align-center mx-auto justify-between mt-3 space-x-2'>
           <Link href={`/product/${product.slug}`}>
             <a className='flex flex-col'>
-              <span className='text-gray-600 text-base font-medium font-poppins'>
+              <span className='text-mainPurple text-base font-medium font-poppins'>
                 {product.name.length < 22
                   ? product.name
                   : `${product.name.substr(0, 22)}...`}
@@ -42,7 +42,7 @@ const Card = (product) => {
           <AiOutlineShopping className='w-5 h-5' />
         </div>
         <div className='absolute top-3 opacity-40 rounded-lg bg-black text-white text-sm p-1 px-3 right-3'>
-          {product.stock} in stock
+          {product.stock} in stock 🔥
         </div>
       </div>
     </>

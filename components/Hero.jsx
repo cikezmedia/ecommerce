@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
+import Link from 'next/link';
 
 const variants = {
   hidden: {
@@ -43,14 +44,16 @@ const Hero = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ornare nisi,
           at sed integer nec, velit vulputate est at.
         </p>
-        <motion.button
-          variants={variants}
-          initial='hidden'
-          whileInView='show'
-          className='bg-black w-36 transition ease-out hover:ease-in duration-500  font-bold mt-4 items-center p-4 rounded-lg text-white'
-        >
-          Shop now
-        </motion.button>
+        <Link href='shop'>
+          <motion.button
+            variants={variants}
+            initial='hidden'
+            whileInView='show'
+            className='bg-black w-36 transition ease-out hover:ease-in-out duration-500 hover:bg-mainPurple font-bold mt-4 items-center p-4 rounded-lg text-white'
+          >
+            Shop now
+          </motion.button>
+        </Link>
       </div>
       <div className='flex flex-col text-gray-600 pl-2 lg:pr-20 w-full lg:w-1/2'>
         <Image src='/banner.png' alt='' width={600} height={600} />
