@@ -168,7 +168,7 @@ const ProductPage = () => {
               <div className='flex flex-row items-center justify-between border-b border-gray-300 pb-3'>
                 <div className='flex flex-col text-[11px]'>
                   <span>Dispatch in 1 - 2 days</span>
-                  <span className='underline'>Don't like delay?</span>
+                  <span className='underline'>Do not like delay?</span>
                 </div>
                 <MdKeyboardArrowRight className='w-4 h-4' />
               </div>
