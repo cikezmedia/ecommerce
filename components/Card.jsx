@@ -32,7 +32,7 @@ const Card = (product) => {
           </Link>
           <Link href={`/product/${product.slug}`}>
             <a>
-              <div className='flex bg-mainPurple font-semibold text-sm font-montserrat p-1.5 lg:p-2 px-4 rounded-lg'>
+              <div className='flex bg-mainPurple font-semibold text-sm font-montserrat p-1.5 text-white lg:p-2 px-4 rounded-lg'>
                 ${product.amount}
               </div>
             </a>

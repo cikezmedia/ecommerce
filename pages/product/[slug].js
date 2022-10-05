@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import data from '../../utils/data';
@@ -10,8 +10,11 @@ import {
 } from 'react-icons/md';
 import Link from 'next/link';
 import { Banner } from '../../components';
+import { Store } from '../../utils/Store';
 
 const ProductPage = () => {
+  const { state, dispatch } = useContext(Store);
+
   const [count, setCount] = useState(1);
   const { query } = useRouter();
   const { slug } = query;
@@ -36,6 +39,15 @@ const ProductPage = () => {
   if (!product) {
     return <div>Product Not Found</div>;
   }
+  const addToCartHandler = () => {
+    const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    if (product.countInStock < quantity) {
+      alert('Sorry product is out of stock');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+  };
   return (
     <>
       <Head>
@@ -115,7 +127,12 @@ const ProductPage = () => {
               <span className='text-4xl font-semibold pt-3 gap-4'>
                 ${(product.amount * count).toFixed(2)}
               </span>
-              <span className='pt-4'>In stock: {product.countInStock}</span>
+              <span className='pt-4'>
+                In stock:{' '}
+                {product.countInStock > 0
+                  ? product.countInStock
+                  : 'Unavailable'}
+              </span>
             </div>
             <div className='flex flex-row items-center gap-4 pt-2'>
               <button
@@ -133,11 +150,12 @@ const ProductPage = () => {
               </button>
             </div>
             <div className='flex flex-row items-center pt-4 gap-4'>
-              <Link href='../' alt=''>
-                <button className='bg-white text-black border p-2.5 px-6 border-black rounded-lg'>
-                  Add to Cart
-                </button>
-              </Link>
+              <button
+                onClick={addToCartHandler}
+                className='bg-white text-black border p-2.5 px-6 border-black rounded-lg'
+              >
+                Add to Cart
+              </button>
               <Link href='../' alt=''>
                 <a>
                   <button className='bg-black text-white p-2.5 px-6 rounded-lg'>
