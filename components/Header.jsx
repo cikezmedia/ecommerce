@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { MdLightMode } from 'react-icons/md';
 import { RiSearch2Line, RiUser6Line, RiShoppingCartLine } from 'react-icons/ri';
-import { IoIosHeartEmpty } from 'react-icons/io';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { CgMenuRight } from 'react-icons/cg';
 import { Store } from '../utils/Store';
 const Header = () => {
@@ -34,7 +34,7 @@ const Header = () => {
         <div className='hidden lg:block'>
           <div className='container flex flex-row justify-between items-center mx-auto'>
             <Link href='../'>
-              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-pink to-black w-1/3'>
+              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-purple to-white w-1/3'>
                 KezMart
               </a>
             </Link>
@@ -60,7 +60,11 @@ const Header = () => {
                 />
                 <RiSearch2Line className='absolute w-5 h-5 cursor-pointer top-1.5 right-2 text-black dark:text-pink' />
               </form>
-              <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
+              <Link href='../cart'>
+                <a>
+                  <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
+                </a>
+              </Link>
               <div className='absolute right-[89px] bottom-5'>
                 {cart.cartItems.length > 0 && (
                   <span className='flex flex-col items-center mx-auto  bg-black dark:bg-white dark:text-black w-5 h-5 text-white rounded-full'>
@@ -70,7 +74,7 @@ const Header = () => {
                   </span>
                 )}
               </div>
-              <IoIosHeartEmpty className='w-6 h-6 text-black dark:text-white' />
+              <AiOutlineHeart className='w-6 h-6 text-black dark:text-white' />
               <div
                 className='flex flex-row items-center cursor-pointer'
                 onClick={toggleMenu}
@@ -108,13 +112,17 @@ const Header = () => {
         <div className='flex lg:hidden'>
           <div className='relative container flex flex-row justify-between items-center mx-auto'>
             <Link href='../'>
-              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink'>
+              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-purple to-white'>
                 KezMart
               </a>
             </Link>
             <div className='flex flex-row items-center space-x-4'>
               <RiSearch2Line className='w-6 h-6 text-black dark:text-white' />
-              <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
+              <Link href='../cart'>
+                <a>
+                  <RiShoppingCartLine className='w-6 h-6 text-black dark:text-white' />
+                </a>
+              </Link>
               <div className='absolute right-[80px] bottom-5'>
                 {cart.cartItems.length > 0 && (
                   <span className='flex flex-col items-center mx-auto  bg-black dark:bg-white dark:text-black w-5 h-5 text-white rounded-full'>
@@ -124,7 +132,7 @@ const Header = () => {
                   </span>
                 )}
               </div>
-              <IoIosHeartEmpty className='w-6 h-6 text-black dark:text-white' />
+              <AiOutlineHeart className='w-6 h-6 text-black dark:text-white' />
               <div
                 onClick={toggleMenu}
                 ref={menuRef}

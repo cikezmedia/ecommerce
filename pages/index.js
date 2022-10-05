@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import Banner from '../components/Banner';
-import Hero from '../components/Hero';
-import Products from '../components/Products';
+import { Banner, Hero, Products } from '../components/';
 
 export default function Home() {
   return (

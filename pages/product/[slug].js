@@ -55,10 +55,10 @@ const ProductPage = () => {
         <meta name='description' content='KezMart Special Store' />
         <link rel='icon' href='/favicon.png' />
       </Head>
-      <div className='flex flex-row items-center justify-between sticky z-10 top-0 bg-gradient-to-r from-mainPurple to-gray-100 pl-6 pr-6 p-2'>
+      <div className='flex flex-row items-center justify-between sticky z-10 top-0 bg-gradient-to-r from-purple to-gray-100 pl-6 pr-6 p-2'>
         <Link href='/shop'>
           <a>
-            <MdOutlineKeyboardBackspace className='w-7 h-7 text-black' />
+            <MdOutlineKeyboardBackspace className='w-7 h-7 text-white' />
           </a>
         </Link>
         <span className='text-black font-medium'>{product.brand}</span>

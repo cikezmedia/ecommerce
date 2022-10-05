@@ -6,4 +6,5 @@ export { default as Product } from './Product';
 export { default as Products } from './Products';
 export { default as Filter } from './Filter';
 export { default as Card } from './Card';
+export { default as Cart } from './Cart';
 export { default as Footer } from './Footer';

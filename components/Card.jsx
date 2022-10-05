@@ -22,7 +22,7 @@ const Card = (product) => {
         <div className='flex flex-row align-center mx-auto justify-between mt-3 space-x-2'>
           <Link href={`/product/${product.slug}`}>
             <a className='flex flex-col'>
-              <span className='text-mainPurple text-base font-medium font-poppins'>
+              <span className='text-mainPurple dark:text-gray-400 text-base font-medium font-poppins'>
                 {product.name.length < 22
                   ? product.name
                   : `${product.name.substr(0, 22)}...`}

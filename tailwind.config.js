@@ -7,9 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: '#C4BAFF',
-        pink: '#FEBDFC',
-        mainPurple: '#9886fa',
+        purple: '#cc8b65',
+        pink: '#e3dcd2',
+        mainPurple: '#013328',
       },
     },
     fontFamily: {
