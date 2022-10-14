@@ -1,14 +1,19 @@
 import Link from 'next/link';
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import { signOut, useSession } from 'next-auth/react';
 import { MdLightMode } from 'react-icons/md';
 import { RiSearch2Line, RiUser6Line, RiShoppingCartLine } from 'react-icons/ri';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { CgMenuRight } from 'react-icons/cg';
 import { Store } from '../utils/Store';
+import Cookies from 'js-cookie';
+
 const Header = () => {
+  const { status, data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
   const { state, dispatch } = useContext(Store);
-  const { darkMode, cart } = state;
+  const { cart } = state;
   const menuRef = useRef();
 
   useEffect(() => {
@@ -24,17 +29,30 @@ const Header = () => {
     };
   });
 
+  const logoutUser = () => {
+    Cookies.remove('cart');
+    dispatch({ type: 'CART_RESET' });
+    signOut({ callbackUrl: '/login' });
+  };
+
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems]);
+
   function toggleMenu() {
     setIsOpen((prev) => !prev);
   }
   return (
-    <>
-      <header className='p-6 border-b border-black dark:border-pink'>
+    <div className='bg-white text-black dark:bg-black dark:text-white'>
+      <header
+        className='p-6 border-b border-black dark:border-pink'
+        ref={menuRef}
+      >
         {/* Desktop Menu */}
         <div className='hidden lg:block'>
           <div className='container flex flex-row justify-between items-center mx-auto'>
             <Link href='../'>
-              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-purple to-white w-1/3'>
+              <a className='text-3xl font-bold font-montserrat text-purple w-1/3'>
                 KezMart
               </a>
             </Link>
@@ -66,10 +84,10 @@ const Header = () => {
                 </a>
               </Link>
               <div className='absolute right-[89px] bottom-5'>
-                {cart.cartItems.length > 0 && (
+                {cartItemsCount > 0 && (
                   <span className='flex flex-col items-center mx-auto  bg-black dark:bg-white dark:text-black w-5 h-5 text-white rounded-full'>
                     <span className='flex flex-col text-sm items-center'>
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      {cartItemsCount}
                     </span>
                   </span>
                 )}
@@ -78,24 +96,52 @@ const Header = () => {
               <div
                 className='flex flex-row items-center cursor-pointer'
                 onClick={toggleMenu}
-                ref={menuRef}
               >
                 <RiUser6Line className='w-6 h-6 text-black dark:text-white' />
-
                 {isOpen && (
                   <>
                     <div className='absolute bg-black w-1 dark:bg-pink top-[60px] right-0 h-6'></div>
-                    <div className='absolute top-[70px] z-20 bg-black  dark:bg-pink w-40 text-white dark:text-black right-0 p-4 rounded-b-lg'>
+                    <div className='absolute top-[70px] z-20 bg-black  dark:bg-pink w-48 text-white dark:text-black right-0 p-4 rounded-b-lg'>
                       <div className='flex flex-col gap-5 text-lg font-roboto text-purple dark:text-black tracking-wider'>
-                        <Link
-                          href='/login'
-                          className='pb-4 border-b-2 border-black'
-                        >
-                          <a>Login</a>
-                        </Link>
-                        <Link href='../'>
-                          <a>Signup</a>
-                        </Link>
+                        {status === 'loading' ? (
+                          'loading'
+                        ) : session?.user ? (
+                          <div className='flex flex-col gap-5'>
+                            <div className='text-mainPurple'>
+                              <span className='font-light'>Welcome</span>{' '}
+                              {session?.user.name}
+                            </div>
+                            <Link href='../cart'>
+                              <a>My Cart</a>
+                            </Link>
+                            <Link href='../shipping'>
+                              <a>Checkout</a>
+                            </Link>
+                            <Link href='../order-history'>
+                              <a>Order History</a>
+                            </Link>
+                            <a
+                              href='#'
+                              className='text-red-500'
+                              onClick={logoutUser}
+                            >
+                              Logout
+                            </a>
+                          </div>
+                        ) : (
+                          <div className='flex flex-col gap-5'>
+                            <Link
+                              href='../login'
+                              className='pb-4 border-b-2 border-black'
+                            >
+                              <a>Login</a>
+                            </Link>
+                            <Link href='../signup'>
+                              <a>Signup</a>
+                            </Link>
+                          </div>
+                        )}
+
                         <div className='flex flex-row text-sm gap-2 items-center'>
                           <MdLightMode className='w-5 h-5' /> Dark theme
                         </div>
@@ -112,7 +158,7 @@ const Header = () => {
         <div className='flex lg:hidden'>
           <div className='relative container flex flex-row justify-between items-center mx-auto'>
             <Link href='../'>
-              <a className='text-3xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-purple to-white'>
+              <a className='text-3xl font-bold font-montserrat text-purple'>
                 KezMart
               </a>
             </Link>
@@ -124,10 +170,10 @@ const Header = () => {
                 </a>
               </Link>
               <div className='absolute right-[80px] bottom-5'>
-                {cart.cartItems.length > 0 && (
+                {cartItemsCount > 0 && (
                   <span className='flex flex-col items-center mx-auto  bg-black dark:bg-white dark:text-black w-5 h-5 text-white rounded-full'>
                     <span className='flex flex-col text-sm items-center'>
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      {cartItemsCount}
                     </span>
                   </span>
                 )}
@@ -135,7 +181,6 @@ const Header = () => {
               <AiOutlineHeart className='w-6 h-6 text-black dark:text-white' />
               <div
                 onClick={toggleMenu}
-                ref={menuRef}
                 className='flex flex-row items-center cursor-pointer'
               >
                 <CgMenuRight className='w-8 h-8 text-black dark:text-white' />
@@ -154,12 +199,42 @@ const Header = () => {
                           <a>Wishlist</a>
                         </Link>
                       </div>
-                      <Link href='../'>
-                        <a>Login</a>
-                      </Link>
-                      <Link href='../'>
-                        <a>Signup</a>
-                      </Link>
+                      {status === 'loading' ? (
+                        'loading'
+                      ) : session?.user ? (
+                        <span className='flex flex-col gap-5 border-t pt-5 border-mainPurple'>
+                          <div className='text-mainPurple'>
+                            <span className='font-light'>Welcome</span>{' '}
+                            {session?.user.name}
+                          </div>
+                          <Link href='../cart'>
+                            <a>My Cart</a>
+                          </Link>
+                          <Link href='../shipping'>
+                            <a>Checkout</a>
+                          </Link>
+                          <Link href='../order-history'>
+                            <a>Order History</a>
+                          </Link>
+                          <a
+                            href='#'
+                            className='text-red-500'
+                            onClick={logoutUser}
+                          >
+                            Logout
+                          </a>
+                        </span>
+                      ) : (
+                        <span className='flex flex-col gap-5'>
+                          <Link href='../login'>
+                            <a>Login</a>
+                          </Link>
+                          <Link href='../signup'>
+                            <a>Signup</a>
+                          </Link>
+                        </span>
+                      )}
+
                       <div className='flex flex-row items-center cursor-pointer space-x-2 text-sm'>
                         <MdLightMode className='w-5 h-5' />
                         <span>Light theme</span>
@@ -172,7 +247,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-    </>
+    </div>
   );
 };
 

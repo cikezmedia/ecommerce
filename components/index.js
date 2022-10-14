@@ -7,4 +7,5 @@ export { default as Products } from './Products';
 export { default as Filter } from './Filter';
 export { default as Card } from './Card';
 export { default as Cart } from './Cart';
+export { default as CheckoutWizard } from './CheckoutWizard';
 export { default as Footer } from './Footer';

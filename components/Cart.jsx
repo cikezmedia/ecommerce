@@ -1,16 +1,17 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
+import { Store } from '../utils/Store';
 
 const Cart = (props) => {
-  const [count, setCount] = useState(1);
-  function handleAdd() {
-    setCount((prev) => prev + 1);
-  }
+  const { state, dispatch } = useContext(Store);
+  const {
+    cart: { cartItems },
+  } = state;
 
-  function handleSub() {
-    setCount((prev) => prev - 1);
-  }
+  const removeItemHandler = (item) => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
   return (
     <>
       <div className='grid grid-cols-5 border-b pb-8 items-center pt-8 gap-4 border-gray-300'>
@@ -21,34 +22,36 @@ const Cart = (props) => {
             width='80px'
             height='80px'
             className='rounded-lg'
+            priority={true}
           />
         </div>
 
         <div className='col-span-3 gap-4'>
           <div className='flex flex-col space-y-1 lg:space-y-4'>
-            <h3 className='text-sm font-montserrat'>{props.name}</h3>
+            <h3 className='text-sm font-montserrat text-black'>{props.name}</h3>
             <div className='flex flex-row gap-3'>
-              <select className='bg-gray-200 text-black  dark:bg-gray-700 dark:text-white p-0.5 form-select rounded-lg space-x-2'>
+              <select className='bg-gray-200 text-black p-0.5 form-select rounded-lg space-x-2'>
                 <option>S</option>
                 <option>M</option>
                 <option>L</option>
                 <option>XL</option>
                 <option>XXL</option>
               </select>
-
-              <div className='bg-gray-200 text-black  dark:bg-gray-700 dark:text-white p-0.5 form-select rounded-lg px-3 space-x-4'>
-                <button onClick={handleSub}>-</button>
-                <span>{count}</span>
-                <button onClick={handleAdd}>+</button>
-              </div>
+              <span className='text-black'>
+                {props.quantity} x ${props.amount.toFixed(2)}
+              </span>
             </div>
           </div>
         </div>
 
         <div className='col-span-1'>
           <div className='flex flex-col gap-2 items-end place-content-end'>
-            <span className='text-lg font-medium'>{props.amount}</span>
-            <MdOutlineDelete className='w-6 h-6 text-red-500' />
+            <span className='text-lg font-medium text-black'>
+              ${(props.amount * props.quantity).toFixed(2)}
+            </span>
+            <button onClick={() => removeItemHandler(props.item)}>
+              <MdOutlineDelete className='w-6 h-6 text-red-500' />
+            </button>
           </div>
         </div>
       </div>

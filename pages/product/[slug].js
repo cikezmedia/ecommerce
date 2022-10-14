@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import data from '../../utils/data';
 import Image from 'next/image';
 import { AiFillStar } from 'react-icons/ai';
@@ -11,42 +11,45 @@ import {
 import Link from 'next/link';
 import { Banner } from '../../components';
 import { Store } from '../../utils/Store';
+import dynamic from 'next/dynamic';
 
-const ProductPage = () => {
+function ProductPage() {
+  const inputRef = useRef();
   const { state, dispatch } = useContext(Store);
-
   const [count, setCount] = useState(1);
   const { query } = useRouter();
+  const router = useRouter();
   const { slug } = query;
   const product = data.products.find((x) => x.slug === slug);
 
-  function handleAdd() {
+  const handleAdd = () => {
     if (count < product.countInStock) {
       setCount((prev) => prev + 1);
     } else {
       setCount(product.countInStock);
     }
-  }
+  };
 
-  function handleSub() {
+  const handleSub = () => {
     if (count <= 1) {
       setCount(1);
     } else {
       setCount((prev) => prev - 1);
     }
-  }
+  };
 
   if (!product) {
     return <div>Product Not Found</div>;
   }
   const addToCartHandler = () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const quantity = existItem ? existItem.quantity + count : count;
     if (product.countInStock < quantity) {
       alert('Sorry product is out of stock');
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart');
   };
   return (
     <>
@@ -73,6 +76,7 @@ const ProductPage = () => {
               height='100%'
               layout='responsive'
               className='rounded-lg'
+              priority={true}
             />
           </div>
         </div>
@@ -106,23 +110,6 @@ const ProductPage = () => {
               <span>{product.numReviews} Reviews</span>
             </div>
             <span className='text-base font-normal'>{product.description}</span>
-            <form className='flex flex-row items-center gap-2 pt-2'>
-              <span className='bg-mainPurple text-white text-lg p-2 px-4 font-bold rounded-lg'>
-                S
-              </span>
-              <span className='bg-mainPurple text-white text-lg p-2 px-4 font-bold rounded-lg'>
-                M
-              </span>
-              <span className='bg-mainPurple text-white text-lg p-2 px-4 font-bold rounded-lg'>
-                L
-              </span>
-              <span className='bg-mainPurple text-white text-lg p-2 px-4 font-bold rounded-lg'>
-                XL
-              </span>
-              <span className='bg-mainPurple active:bg-black active:text-white text-white text-lg p-2 px-4 font-bold rounded-lg'>
-                XXL
-              </span>
-            </form>
             <div className='flex flex-row items-center justify-between'>
               <span className='text-4xl font-semibold pt-3 gap-4'>
                 ${(product.amount * count).toFixed(2)}
@@ -141,7 +128,9 @@ const ProductPage = () => {
               >
                 -
               </button>
-              <span className='font-normal text-3xl'>{count}</span>
+              <div ref={inputRef} className='font-normal text-3xl'>
+                {count}
+              </div>
               <button
                 onClick={handleAdd}
                 className='text-white bg-black font-semibold text-xl w-9 h-9 rounded-lg'
@@ -183,6 +172,6 @@ const ProductPage = () => {
       <Banner />
     </>
   );
-};
+}
 
-export default ProductPage;
+export default dynamic(() => Promise.resolve(ProductPage), { ssr: false });

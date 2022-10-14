@@ -12,22 +12,23 @@ const Card = (product) => {
             <Image
               src={product.image}
               alt=''
-              width='100'
+              width='100%'
               height='100%'
               layout='responsive'
               className='rounded-lg'
+              priority={true}
             />
           </a>
         </Link>
         <div className='flex flex-row align-center mx-auto justify-between mt-3 space-x-2'>
           <Link href={`/product/${product.slug}`}>
             <a className='flex flex-col'>
-              <span className='text-mainPurple dark:text-gray-400 text-base font-medium font-poppins'>
+              <span className='text-black font-medium font-poppins'>
                 {product.name.length < 22
                   ? product.name
                   : `${product.name.substr(0, 22)}...`}
               </span>
-              <span className='text-gray-400 text-sm'>{product.brand}</span>
+              <span className='text-gray-400 text-xs'>{product.brand}</span>
             </a>
           </Link>
           <Link href={`/product/${product.slug}`}>
