@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { Store } from '../utils/Store';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
+import { Router, useRouter } from 'next/router';
 
 export default function Shipping() {
   const {
@@ -13,17 +14,19 @@ export default function Shipping() {
     setValue,
   } = useForm();
 
+  const router = useRouter();
+
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { shippingAddress } = cart;
 
   useEffect(() => {
-    setValue('fullname', shippingAddress.fullname);
-    setValue('address', shippingAddress.address);
-    setValue('city', shippingAddress.city);
-    setValue('state', shippingAddress.state);
-    setValue('postalCode', shippingAddress.postalCode);
-    setValue('country', shippingAddress.country);
+    setValue('fullname', shippingAddress?.fullname);
+    setValue('address', shippingAddress?.address);
+    setValue('city', shippingAddress?.city);
+    setValue('state', shippingAddress?.state);
+    setValue('postalCode', shippingAddress?.postalCode);
+    setValue('country', shippingAddress?.country);
   }, [setValue, shippingAddress]);
 
   const submitForm = async (data, event) => {
@@ -54,6 +57,7 @@ export default function Shipping() {
         },
       })
     );
+    router.push('/payment');
   };
   return (
     <>
