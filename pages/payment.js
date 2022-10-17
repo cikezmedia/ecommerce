@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import { BsPaypal, BsCashCoin } from 'react-icons/bs';
 import { FaCcStripe } from 'react-icons/fa';
 
-const payment = () => {
+const PaymentScreen = () => {
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState('');
 
@@ -103,4 +103,4 @@ const payment = () => {
   );
 };
 
-export default payment;
+export default PaymentScreen;
